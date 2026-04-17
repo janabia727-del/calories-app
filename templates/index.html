@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة السعرات الحرارية</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='icon.png') }}">
+</head>
+<body>
+
+<div class="page">
+    <div class="card">
+        <h1>حاسبة السعرات الحرارية</h1>
+        <p class="subtitle">أدخل بياناتك لحساب احتياجك اليومي بشكل تقريبي</p>
+
+        <form method="POST" class="form-box">
+
+            <label for="name">الاسم</label>
+            <input type="text" id="name" name="name" placeholder="اكتب اسمك" required>
+
+            <label for="gender">الجنس</label>
+            <select id="gender" name="gender" required>
+                <option value="">اختر الجنس</option>
+                <option value="male">ذكر</option>
+                <option value="female">أنثى</option>
+            </select>
+
+            <label for="age">العمر</label>
+            <input type="number" id="age" name="age" placeholder="مثال: 25" required>
+
+            <label for="height">الطول (سم)</label>
+            <input type="number" step="0.1" id="height" name="height" placeholder="مثال: 175" required>
+
+            <label for="weight">الوزن (كغم)</label>
+            <input type="number" step="0.1" id="weight" name="weight" placeholder="مثال: 70" required>
+
+            <label for="goal">الهدف</label>
+            <select id="goal" name="goal" required>
+                <option value="">اختر الهدف</option>
+                <option value="lose">خسارة وزن</option>
+                <option value="gain">زيادة وزن</option>
+                <option value="maintain">ثبات الوزن</option>
+            </select>
+
+            <label for="walking_speed">سرعة المشي</label>
+            <select id="walking_speed" name="walking_speed" required>
+                <option value="">اختر سرعة المشي</option>
+                <option value="slow">بطيء</option>
+                <option value="medium">متوسط</option>
+                <option value="fast">سريع</option>
+            </select>
+
+            <label for="walking_minutes">عدد دقائق المشي يوميًا</label>
+            <input type="number" id="walking_minutes" name="walking_minutes" placeholder="مثال: 30" required>
+
+            <button type="submit">احسب السعرات</button>
+        </form>
+
+        {% if error %}
+            <div class="message error">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        {% if result %}
+            <div class="result-box">
+                <h2>مرحبًا {{ result.name }}</h2>
+
+                <div class="result-grid">
+                    <div class="result-item">
+                        <span>الجنس</span>
+                        <strong>{{ result.gender }}</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>العمر</span>
+                        <strong>{{ result.age }}</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>الطول</span>
+                        <strong>{{ result.height }} سم</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>الوزن</span>
+                        <strong>{{ result.weight }} كغم</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>الهدف</span>
+                        <strong>{{ result.goal }}</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>سرعة المشي</span>
+                        <strong>{{ result.walking_speed }}</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>دقائق المشي</span>
+                        <strong>{{ result.walking_minutes }} دقيقة</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>السعرات الأساسية</span>
+                        <strong>{{ result.base_calories }}</strong>
+                    </div>
+
+                    <div class="result-item">
+                        <span>الحرق من المشي</span>
+                        <strong>{{ result.walk_burn }}</strong>
+                    </div>
+                </div>
+
+                <div class="final-result">
+                    احتياجك اليومي التقريبي:
+                    <strong>{{ result.final_calories }} سعرة حرارية</strong>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
