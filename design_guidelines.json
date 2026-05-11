@@ -1,0 +1,106 @@
+{
+  "brand": {
+    "name": "Qalam.ai",
+    "logo_concept": "Minimalist geometric pen nib merged with an open book, sharp lines. No generic AI sparkles.",
+    "emotional_tone": "Authoritative, premium, trustworthy, and warm. Designed to make teachers feel empowered, not replaced."
+  },
+  "theme": {
+    "archetype": "Archetype 4 (Swiss & High-Contrast)",
+    "description": "Ink and Amber. A deep navy/ink anchor for structure and authority, paired with a vibrant warm amber for engagement and warmth.",
+    "colors": {
+      "light": {
+        "background": "#F9FAFB",
+        "foreground": "#0F172A",
+        "primary": "#0B132B",
+        "primary_foreground": "#FFFFFF",
+        "accent": "#F5A623",
+        "accent_foreground": "#0B132B",
+        "surface": "#FFFFFF",
+        "border": "#E2E8F0"
+      },
+      "dark": {
+        "background": "#0B132B",
+        "foreground": "#F8FAFC",
+        "primary": "#F5A623",
+        "primary_foreground": "#0B132B",
+        "accent": "#1C2541",
+        "accent_foreground": "#F5A623",
+        "surface": "#121A33",
+        "border": "#2D3748"
+      },
+      "live_quiz_palette": {
+        "option_a": "#EF4444",
+        "option_b": "#3B82F6",
+        "option_c": "#F5A623",
+        "option_d": "#10B981"
+      }
+    }
+  },
+  "typography": {
+    "english": {
+      "headings": "Cabinet Grotesk",
+      "body": "IBM Plex Sans"
+    },
+    "arabic": {
+      "headings": "Tajawal",
+      "body": "IBM Plex Sans Arabic"
+    },
+    "scale": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl tracking-tight",
+      "h3": "text-xl sm:text-2xl",
+      "body": "text-base leading-relaxed"
+    }
+  },
+  "spacing_and_layout": {
+    "general": "Generous spacing. Use p-8 to p-12 for dashboard cards. Modular bento grid layouts for the teacher dashboard.",
+    "rtl_guidelines": "Use Tailwind logical properties (e.g., 'start', 'end', 'ps', 'pe', 'ms', 'me', 'border-s') exclusively instead of physical properties ('left', 'right', 'pl', 'pr', 'border-l') to ensure flawless LTR to RTL transition.",
+    "dashboard_grid": "Mode B (Control Room): grid-cols-1 md:grid-cols-3 lg:grid-cols-4. Gap-6. Cardless or minimal 1px border cards. Use direct children."
+  },
+  "motion": {
+    "hover_states": "Crisp lift (-translate-y-1) and subtle shadow increase. No bouncy animations. Ensure focus states have high contrast.",
+    "live_quiz": "High energy entrance animations for questions. Timer ring smooth countdown. Must respect prefers-reduced-motion."
+  },
+  "component_instructions": {
+    "buttons": "Sharp corners or subtle rounded (rounded-md). High contrast. Primary buttons in Ink (light mode) or Amber (dark mode). Always define hover text color.",
+    "cards": "Subtle 1px border. No soft, muddy shadows. If shadow is used, it should be crisp. Apply optical alignment for inner content.",
+    "navigation": "Sticky glassmorphism header (backdrop-blur-xl bg-white/70 or bg-[#0B132B]/70) for marketing. Solid bg for dashboard. Must include language switcher (EN/AR).",
+    "forms": "Use Shadcn UI forms. Sharp borders, high contrast focus states (focus:ring-2 focus:ring-accent).",
+    "testing": "All interactive and key informational elements MUST include 'data-testid' attribute (e.g. data-testid=\"login-submit-btn\")."
+  },
+  "key_page_layouts": {
+    "landing": "Hero section with large typographic hook. Social proof logos. Asymmetrical bento grid for features (AI extraction, Auto grading). Maximum image height 80vh on mobile. Max overlay bg-black/50.",
+    "teacher_dashboard": "Mini-sidebar. Top stats row (Total Classes, Quizzes Generated, etc.). Recent activity feed. Quick actions block.",
+    "pdf_upload": "Drag and drop zone with dashed border. Document grid with metadata. Use Shadcn card.",
+    "live_quiz_presenter": "Fullscreen. Massive typography (text-6xl+). 4 colored blocks for answers. Live participant counter badge. Timer ring.",
+    "student_join": "Ultra-minimalist. Big bold input field for 6-digit code. Centered layout."
+  },
+  "media": {
+    "hero_background": {
+      "url": "https://images.pexels.com/photos/5212321/pexels-photo-5212321.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Teacher standing in front of blackboard - use with dark ink gradient overlay"
+    },
+    "sponsor_logos": [
+      "https://images.unsplash.com/photo-1696629455004-613f2acddb0c?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwzfHx1bml2ZXJzaXR5JTIwbG9nb3xlbnwwfHx8fDE3Nzg0NTg0MDB8MA&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1636720706064-cfcb6a9026b4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHw0fHx1bml2ZXJzaXR5JTIwbG9nb3xlbnwwfHx8fDE3Nzg0NTg0MDB8MA&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1721441906254-b5d28d9114f4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2ODl8MHwxfHNlYXJjaHwyfHx1bml2ZXJzaXR5JTIwbG9nb3xlbnwwfHx8fDE3Nzg0NTg0MDB8MA&ixlib=rb-4.1.0&q=85"
+    ],
+    "teacher_portraits": [
+      "https://images.unsplash.com/photo-1758685734511-4f49ce9a382b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTJ8MHwxfHNlYXJjaHwyfHxwcm9mZXNzaW9uYWwlMjB0ZWFjaGVyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzc4NDU4NDAwfDA&ixlib=rb-4.1.0&q=85",
+      "https://images.pexels.com/photos/5905753/pexels-photo-5905753.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    ],
+    "classroom_scenes": [
+      "https://images.pexels.com/photos/8423416/pexels-photo-8423416.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://images.pexels.com/photos/8423012/pexels-photo-8423012.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Install fonts: Cabinet Grotesk, Tajawal, IBM Plex Sans, IBM Plex Sans Arabic.",
+    "Install Phosphor Icons: yarn add @phosphor-icons/react",
+    "Set up Tailwind dark mode support using CSS variables (HSL).",
+    "Implement language switching state, dynamically applying 'dir=\"rtl\"' on the <html> or root container when Arabic is selected.",
+    "Use Tailwind logical properties exclusively (e.g., 'start-0', 'ms-4', 'pe-6') for spacing, borders, and positioning.",
+    "Ensure the Live Quiz Presenter Mode is a fullscreen, immersive layout separate from the main dashboard structure.",
+    "Use Shadcn UI components heavily customized to match the Swiss & High-Contrast Archetype (sharp, crisp, authoritative)."
+  ]
+}
