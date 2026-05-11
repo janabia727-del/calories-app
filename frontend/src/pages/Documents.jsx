@@ -24,7 +24,9 @@ export default function Documents() {
     try {
       const r = await api.get("/documents");
       setDocs(r.data);
-    } catch {}
+    } catch (err) {
+      console.error("Failed to load documents", err);
+    }
   };
   useEffect(() => { load(); }, []);
 

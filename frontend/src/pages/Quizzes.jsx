@@ -12,7 +12,8 @@ export default function Quizzes() {
   const [list, setList] = useState([]);
   const navigate = useNavigate();
   const load = async () => {
-    try { const r = await api.get("/quizzes"); setList(r.data); } catch {}
+    try { const r = await api.get("/quizzes"); setList(r.data); }
+    catch (err) { console.error("Failed to load quizzes", err); }
   };
   useEffect(() => { load(); }, []);
 
@@ -26,25 +27,31 @@ export default function Quizzes() {
   };
 
   const exportPdf = (quiz) => {
-    const w = window.open("", "_blank");
-    if (!w) return;
     const body = quiz.questions.map((q, i) => {
       const opts = Array.isArray(q.options)
-        ? q.options.map((o, idx) => `<li>${String.fromCharCode(65 + idx)}. ${typeof o === "string" ? o : JSON.stringify(o)}</li>`).join("")
+        ? q.options.map((o, idx) => `<li>${String.fromCharCode(65 + idx)}. ${escapeHtml(typeof o === "string" ? o : JSON.stringify(o))}</li>`).join("")
         : "";
-      return `
-        <article style="page-break-inside:avoid;margin-bottom:24px;">
+      return `<article style="page-break-inside:avoid;margin-bottom:24px;">
           <h3>${i + 1}. ${escapeHtml(q.text || "")}</h3>
           ${opts ? `<ul>${opts}</ul>` : ""}
           ${q.answer != null ? `<p><b>Answer:</b> ${escapeHtml(String(q.answer))}</p>` : ""}
         </article>`;
     }).join("");
-    w.document.write(`<!doctype html><html lang="${quiz.language || 'en'}" dir="${quiz.language === 'ar' ? 'rtl' : 'ltr'}">
+    const html = `<!doctype html><html lang="${quiz.language || 'en'}" dir="${quiz.language === 'ar' ? 'rtl' : 'ltr'}">
       <head><meta charset="utf-8"/><title>${escapeHtml(quiz.title)}</title>
       <style>body{font-family:system-ui;padding:32px;max-width:780px;margin:auto;color:#0B132B}h1{border-bottom:2px solid #F5A623;padding-bottom:8px}ul{list-style:none;padding:0}</style>
-      </head><body><h1>${escapeHtml(quiz.title)}</h1>${body}</body></html>`);
-    w.document.close();
-    setTimeout(() => w.print(), 600);
+      </head><body><h1>${escapeHtml(quiz.title)}</h1>${body}</body></html>`;
+    // Use a Blob URL instead of document.write to avoid the XSS-prone pattern.
+    const blob = new Blob([html], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const w = window.open(url, "_blank");
+    if (!w) { URL.revokeObjectURL(url); return; }
+    // Trigger print after the new window finishes loading the blob.
+    w.addEventListener("load", () => {
+      try { w.print(); } catch (err) { console.error("print failed", err); }
+      // Revoke later so the printed window can keep the resource until it's done.
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
+    });
   };
 
   const del = async (id) => {

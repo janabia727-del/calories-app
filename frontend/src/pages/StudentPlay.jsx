@@ -20,7 +20,8 @@ export default function StudentPlay() {
   }, [code]);
 
   const fetchSess = async () => {
-    try { const r = await api.get(`/live/sessions/${code}`); setSess(r.data); } catch {}
+    try { const r = await api.get(`/live/sessions/${code}`); setSess(r.data); }
+    catch (err) { console.error("Failed to fetch live session", err); }
   };
   useEffect(() => { fetchSess(); const id = setInterval(fetchSess, 1500); return () => clearInterval(id); }, [code]);
 
@@ -35,7 +36,9 @@ export default function StudentPlay() {
     try {
       const r = await api.post("/live/answer", { code, participant_id: meRef.current.id, question_id: sess.current_question?.id, answer: val });
       setLastResult({ correct: r.data.correct, q_idx });
-    } catch {}
+    } catch (err) {
+      console.error("Failed to submit answer", err);
+    }
   };
 
   const status = sess?.status;

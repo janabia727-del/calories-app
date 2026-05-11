@@ -19,7 +19,10 @@ export default function Classes() {
   const [newCls, setNewCls] = useState({ name: "", grade: "", subject: "" });
   const [newStu, setNewStu] = useState({ name: "", email: "" });
 
-  const load = async () => { try { const r = await api.get("/classes"); setList(r.data); } catch {} };
+  const load = async () => {
+    try { const r = await api.get("/classes"); setList(r.data); }
+    catch (err) { console.error("Failed to load classes", err); }
+  };
   useEffect(() => { load(); }, []);
 
   const create = async () => {
