@@ -1,0 +1,48 @@
+{
+  "summary": "Comprehensive backend pytest suite for Qalam.ai (38 tests) — auth, documents, AI generation (questions/quiz/lesson-plan/worksheet), quizzes, classes/students, essay grading, live quiz session flow, AI assistant, reports. All 38 tests pass after fixing one real backend bug (MongoDB ObjectId not serializable in /api/generate/quiz response).",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "POST /api/generate/quiz",
+        "issue": "FIXED — was returning 500 Internal Server Error because Motor's insert_one() mutated quiz_doc in-place adding the BSON _id (ObjectId), which then failed FastAPI's jsonable_encoder ('ObjectId object is not iterable'). Fix: pop('_id', None) after insert (same pattern already used in /api/classes and /api/live/sessions).",
+        "priority": "FIXED"
+      },
+      {
+        "endpoint": "Emergent LLM key budget",
+        "issue": "During the initial test run, GPT-5.2 calls hit 'Budget has been exceeded! Current cost: ~0.006, Max budget: 0.001'. The key briefly recovered and all AI endpoints (questions/quiz/lesson-plan/worksheet/grade/assistant) pass now, but the key has a very tight per-window budget that may be exhausted by heavy usage. Main agent should monitor or request a higher budget on EMERGENT_LLM_KEY (sk-emergent-33dEb908512295aAeC)."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_qalam_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Monitor EMERGENT_LLM_KEY budget — saw transient 'budget exceeded' errors during high-volume AI calls. If users see intermittent 502 'Generation failed: ... Budget has been exceeded', request a higher budget or rotate key.",
+    "Optional hardening: many endpoints still rely on returning raw Motor-inserted dicts. Audit other handlers (e.g., create_class already pops _id, gen_quiz now fixed) to defensively pop _id everywhere or use response_model with from_attributes."
+  ],
+  "critical_code_review_comments": [
+    "server.py is 770 lines — consider splitting into routers (auth, documents, generation, live, classes, reports) once features stabilize.",
+    "`gen_quiz` previously returned the raw inserted dict without stripping _id — anti-pattern. Now fixed.",
+    "`requests.get(EMERGENT_AUTH_SESSION_URL, ...)` inside async endpoint `google_session` is a synchronous blocking call — should use httpx.AsyncClient or run_in_threadpool. Not blocking for now but degrades concurrency.",
+    "`db.users.create_index('email', unique=True)` is on a lowercased value but registration normalises with `.lower()` only after the unique check — consistent today, but a stale uppercase value would bypass. Fine since all writes are lowercased.",
+    "ai_service.py timeouts/retries not visible — if upstream LLM is slow (~30s), consider explicit timeouts and a retry-once policy for transient 5xx."
+  ],
+  "updated_files": [
+    "/app/backend/server.py — popped _id after db.quizzes.insert_one in /api/generate/quiz to fix ObjectId serialization 500 error",
+    "/app/backend/tests/test_qalam_api.py — created comprehensive pytest suite (38 tests)"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "skipped"},
+  "test_credentials": "teacher@qalam.ai / Test1234! (created via /api/auth/register during first run; subsequent runs use login)",
+  "seed_data_creation": "Tests create per-run resources prefixed with 'TEST ' (classes, students, quizzes, documents). Document is soft-deleted, quiz is hard-deleted at end of run, classes are deleted. A short throwaway second-user account is created (email second_<uuid>@qalam.ai) to verify document privacy — not deleted.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Run: `cd /app && python -m pytest backend/tests/test_qalam_api.py -v --junitxml=/app/test_reports/pytest/pytest_results.xml`. The suite is order-dependent (TestAIGeneration.test_generate_quiz sets the class-level quiz_id used by TestLive). The whole suite takes ~35-40s; AI calls dominate. If EMERGENT_LLM_KEY budget is exceeded, AI generation tests will return 502 — that is an env issue, not a code regression.",
+  "rca_of_the_issue": "POST /api/generate/quiz returned 500 (not the wrapped 502) because the exception originated AFTER the try/except block, during JSON serialization of the response. PyMongo/Motor's `insert_one(doc)` mutates the supplied dict in-place by setting `doc['_id'] = ObjectId(...)`. The endpoint then `return quiz_doc` which still contained that ObjectId. FastAPI's jsonable_encoder cannot serialize ObjectId, raising `ValueError: [TypeError(\"'ObjectId' object is not iterable\"), ...]` after the handler had already returned, hence FastAPI converts it to a generic 500. Mitigation applied: `quiz_doc.pop('_id', None)` immediately after `await db.quizzes.insert_one(quiz_doc)` (same idiom used in create_class). Verified by re-running the full suite — all 38 tests pass."
+}

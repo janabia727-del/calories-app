@@ -1,115 +1,148 @@
+/* ===========================================================================
+   Qalam.ai — Global styles (Ink + Amber)
+   Light & Dark themes, RTL + LTR, Cabinet Grotesk / Tajawal stack.
+   =========================================================================== */
+
+/* Google Fonts: IBM Plex Sans, IBM Plex Sans Arabic, Tajawal */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    margin: 0;
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-    font-family:
-        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-
 @layer base {
     :root {
-        --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
+        /* Ink + Amber — Light */
+        --background: 210 20% 98%;       /* #F9FAFB */
+        --foreground: 222 47% 11%;       /* #0F172A */
         --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
+        --card-foreground: 222 47% 11%;
         --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
+        --popover-foreground: 222 47% 11%;
+        --primary: 220 56% 11%;          /* #0B132B ink */
+        --primary-foreground: 0 0% 100%;
+        --secondary: 210 16% 93%;
+        --secondary-foreground: 220 56% 11%;
+        --muted: 210 16% 95%;
+        --muted-foreground: 220 9% 40%;
+        --accent: 35 91% 55%;            /* #F5A623 amber */
+        --accent-foreground: 220 56% 11%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 214 32% 91%;           /* #E2E8F0 */
+        --input: 214 32% 91%;
+        --ring: 35 91% 55%;
+        --chart-1: 35 91% 55%;
+        --chart-2: 220 56% 25%;
+        --chart-3: 173 58% 39%;
+        --chart-4: 0 84% 60%;
+        --chart-5: 270 60% 55%;
         --radius: 0.5rem;
     }
     .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
+        --background: 220 56% 11%;       /* #0B132B */
+        --foreground: 210 40% 98%;
+        --card: 223 38% 14%;             /* #121A33 */
+        --card-foreground: 210 40% 98%;
+        --popover: 223 38% 14%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 35 91% 55%;           /* amber */
+        --primary-foreground: 220 56% 11%;
+        --secondary: 222 34% 18%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 222 34% 18%;
+        --muted-foreground: 215 20% 70%;
+        --accent: 222 34% 18%;
+        --accent-foreground: 35 91% 55%;
+        --destructive: 0 70% 55%;
+        --destructive-foreground: 0 0% 100%;
+        --border: 217 19% 27%;           /* #2D3748 */
+        --input: 217 19% 27%;
+        --ring: 35 91% 55%;
+        --chart-1: 35 91% 55%;
+        --chart-2: 173 58% 50%;
+        --chart-3: 200 70% 60%;
+        --chart-4: 0 70% 60%;
+        --chart-5: 270 60% 65%;
     }
-}
-
-@layer base {
     * {
         @apply border-border;
     }
     body {
         @apply bg-background text-foreground;
+        font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont,
+            "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-feature-settings: "ss01", "cv11";
+    }
+    /* Arabic typography */
+    [dir="rtl"] body,
+    html[lang="ar"] body {
+        font-family: "Tajawal", "IBM Plex Sans Arabic", system-ui, sans-serif;
+        letter-spacing: 0;
+    }
+    [dir="rtl"] .font-display,
+    html[lang="ar"] .font-display {
+        font-family: "Tajawal", "IBM Plex Sans Arabic", sans-serif;
+        font-weight: 900;
+    }
+    .font-display {
+        font-family: "IBM Plex Sans", "Cabinet Grotesk", system-ui, sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+    }
+    /* Better numeric display for stats */
+    .tabular-nums {
+        font-variant-numeric: tabular-nums;
     }
 }
 
-@layer base {
-    [data-debug-wrapper="true"] {
-        display: contents !important;
+/* ---- App-wide utilities ---- */
+@layer utilities {
+    .glass {
+        background-color: hsl(var(--background) / 0.7);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
+    .hero-grid {
+        background-image:
+            linear-gradient(to right, hsl(var(--border) / 0.4) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(var(--border) / 0.4) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+    }
+    .text-balance {
+        text-wrap: balance;
+    }
+    .scrollbar-thin::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: hsl(var(--border));
+        border-radius: 3px;
+    }
+}
 
-    [data-debug-wrapper="true"] > * {
-        margin-left: inherit;
-        margin-right: inherit;
-        margin-top: inherit;
-        margin-bottom: inherit;
-        padding-left: inherit;
-        padding-right: inherit;
-        padding-top: inherit;
-        padding-bottom: inherit;
-        column-gap: inherit;
-        row-gap: inherit;
-        gap: inherit;
-        border-left-width: inherit;
-        border-right-width: inherit;
-        border-top-width: inherit;
-        border-bottom-width: inherit;
-        border-left-style: inherit;
-        border-right-style: inherit;
-        border-top-style: inherit;
-        border-bottom-style: inherit;
-        border-left-color: inherit;
-        border-right-color: inherit;
-        border-top-color: inherit;
-        border-bottom-color: inherit;
-    }
+/* ---- Live quiz answer color blocks (Kahoot-like) ---- */
+.qbtn-a { background: #EF4444; color: white; }
+.qbtn-b { background: #3B82F6; color: white; }
+.qbtn-c { background: #F5A623; color: #0B132B; }
+.qbtn-d { background: #10B981; color: white; }
+.qbtn-a:hover, .qbtn-b:hover, .qbtn-c:hover, .qbtn-d:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+/* ---- Reveal animation ---- */
+@keyframes qfade {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.qfade { animation: qfade 380ms cubic-bezier(.2,.7,.2,1) both; }
+
+/* RTL fix - inputs/icons */
+[dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
 }
